@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jumia/provider/cart.dart';
 import 'package:jumia/provider/products.dart';
 import 'package:jumia/provider/products_provider.dart';
+import 'package:jumia/widgets/badge.dart';
 import 'package:jumia/widgets/products_grid.dart';
 import 'package:jumia/widgets/products_layout.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   Widget build(BuildContext context) {
     final productsContainer =
         Provider.of<ProductsProvider>(context, listen: false);
+    //final cart = Provider.of<Cart>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,6 +55,14 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             ],
             icon: const Icon(Icons.more_vert),
           ),
+          Consumer<Cart>(
+            //wont be rebuilt when consumer triggers rebuild of cart widget
+            child: IconButton(onPressed: () {}, icon: Icon(Icons.shop)),
+
+              builder: (_, cart, childWidget) => Badge(
+                  child: childWidget as Widget,
+                  value: cart.itemCount.toString(),
+                  color: Colors.red)),
         ],
       ),
       body: ProductsGrid(_showFavorites),
