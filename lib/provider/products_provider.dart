@@ -39,9 +39,32 @@ class ProductsProvider with ChangeNotifier {
   ];
 
 //create listeners to access it
+  // var _showFavoritesOnly = false;
   List<Product> get items {
+    // switch (_showFavoritesOnly) {
+    //   case true:
+    //     return _list
+    //         .where((element) => element.isFavorite == _showFavoritesOnly)
+    //         .toList();
+    //     break;
+    // }
+
     return [..._list];
   }
+
+  // void showFavoritesOnly() {
+  //   _showFavoritesOnly = true;
+  //   notifyListeners();
+  // }
+
+  List<Product> get showOnlyFavorite {
+    return _list.where((element) => element.isFavorite == true).toList();
+  }
+
+  // void showAll() {
+  //   _showFavoritesOnly = false;
+  //   notifyListeners();
+  // }
 
   /*
  it is very important to only change data in the _list 
