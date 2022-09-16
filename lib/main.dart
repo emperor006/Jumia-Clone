@@ -1,7 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:jumia/provider/Orders.dart';
 import 'package:jumia/provider/products_provider.dart';
+import 'package:jumia/screens/cart_screen.dart';
+import 'package:jumia/screens/orders_screen.dart';
 import 'package:jumia/screens/product_detail_screen.dart';
 import 'package:jumia/screens/products_overview_screen.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +31,10 @@ class MyApp extends StatelessWidget {
           create: (ctx) => Cart(),
         ),
 
+        ChangeNotifierProvider(
+          create: (ctx) => Orders(),
+        ),
+
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -36,7 +43,14 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato'),
         home: ProductsOverviewScreen(),
-        routes: {ProductDetailScreen.routeName: (ctx) => ProductDetailScreen()},
+        routes: {
+          CartScreen.routeName:(context) => CartScreen(),
+          ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+          OrdersScreen.routeName:(context) => OrdersScreen()
+          
+          
+          },
+        
       ),
     );
   }

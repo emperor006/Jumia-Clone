@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jumia/provider/cart.dart';
 import 'package:jumia/provider/products.dart';
 import 'package:jumia/provider/products_provider.dart';
+import 'package:jumia/screens/cart_screen.dart';
+import 'package:jumia/widgets/app_drawer.dart';
 import 'package:jumia/widgets/badge.dart';
 import 'package:jumia/widgets/products_grid.dart';
 import 'package:jumia/widgets/products_layout.dart';
@@ -56,9 +58,12 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             icon: const Icon(Icons.more_vert),
           ),
           Consumer<Cart>(
-            //wont be rebuilt when consumer triggers rebuild of cart widget
-            child: IconButton(onPressed: () {}, icon: Icon(Icons.shop)),
-
+              //wont be rebuilt when consumer triggers rebuild of cart widget
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(CartScreen.routeName);
+                  },
+                  icon: Icon(Icons.shop)),
               builder: (_, cart, childWidget) => Badge(
                   child: childWidget as Widget,
                   value: cart.itemCount.toString(),
@@ -66,6 +71,8 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       body: ProductsGrid(_showFavorites),
+
+      drawer: AppDrawer(),
     );
   }
 }
