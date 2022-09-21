@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:jumia/provider/cart.dart';
 import 'package:provider/provider.dart';
@@ -8,14 +10,35 @@ class CartItemLayout extends StatelessWidget {
   final double price;
   final int quantity;
 
-  CartItemLayout(this.id, this.title, this.price, this.quantity, this.productId);
+  CartItemLayout(
+      this.id, this.title, this.price, this.quantity, this.productId);
 
   @override
   Widget build(BuildContext context) {
-
-
     return Dismissible(
-      onDismissed: (direction) =>Provider.of<Cart>(context, listen: false).removeItem(productId)  ,
+      confirmDismiss: ((direction) {
+        return showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: const Text('Are you sure?'),
+                  content: const Text(
+                      'Do you want to remove the item from the cart?'),
+                  actions: [
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        child: const Text('No')),
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        child: const Text('Yes')),
+                  ],
+                ));
+      }),
+      onDismissed: (direction) =>
+          Provider.of<Cart>(context, listen: false).removeItem(productId),
       direction: DismissDirection.endToStart,
       key: ValueKey(id),
       background: Container(
@@ -28,10 +51,8 @@ class CartItemLayout extends StatelessWidget {
               size: 40,
               color: Colors.white,
             )),
-            margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 15),
+        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 15),
       ),
-
-
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 15),
         child: Padding(

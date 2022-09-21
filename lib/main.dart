@@ -7,6 +7,7 @@ import 'package:jumia/screens/cart_screen.dart';
 import 'package:jumia/screens/orders_screen.dart';
 import 'package:jumia/screens/product_detail_screen.dart';
 import 'package:jumia/screens/products_overview_screen.dart';
+import 'package:jumia/screens/user_product_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/cart.dart';
@@ -46,9 +47,8 @@ class MyApp extends StatelessWidget {
         routes: {
           CartScreen.routeName:(context) => CartScreen(),
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
-          OrdersScreen.routeName:(context) => OrdersScreen()
-          
-          
+          OrdersScreen.routeName:(context) => OrdersScreen(),
+          UserProductScreen.routeName:(context) => UserProductScreen()      
           },
         
       ),
