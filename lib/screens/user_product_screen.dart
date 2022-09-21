@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jumia/provider/products_provider.dart';
+import 'package:jumia/screens/edit_product_screen.dart';
 import 'package:jumia/widgets/app_drawer.dart';
 import 'package:jumia/widgets/user_product_item.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,13 @@ class UserProductScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Products'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(EditProductScreen.routeName);
+              },
+              icon: const Icon(Icons.add))
+        ],
       ),
       drawer: AppDrawer(),
       body: Padding(

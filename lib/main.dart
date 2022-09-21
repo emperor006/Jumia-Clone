@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jumia/provider/Orders.dart';
 import 'package:jumia/provider/products_provider.dart';
 import 'package:jumia/screens/cart_screen.dart';
+import 'package:jumia/screens/edit_product_screen.dart';
 import 'package:jumia/screens/orders_screen.dart';
 import 'package:jumia/screens/product_detail_screen.dart';
 import 'package:jumia/screens/products_overview_screen.dart';
@@ -48,7 +49,8 @@ class MyApp extends StatelessWidget {
           CartScreen.routeName:(context) => CartScreen(),
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
           OrdersScreen.routeName:(context) => OrdersScreen(),
-          UserProductScreen.routeName:(context) => UserProductScreen()      
+          UserProductScreen.routeName:(context) => UserProductScreen(),
+          EditProductScreen.routeName:(context) => EditProductScreen()      
           },
         
       ),
