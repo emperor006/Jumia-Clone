@@ -72,7 +72,15 @@ class ProductsProvider with ChangeNotifier {
   class, it would not be possible to notify all child
   widgets that are listening of this change(i.e by calling notifyListeners()).
   */
-  void addProducts() {
+  void addProducts(Product product) {
+    final initialProduct = Product(
+        id: product.id,
+        description: product.description,
+        imageUrl: product.imageUrl,
+        price: product.price,
+        title: product.title);
+    //_list.add(initialProduct);
+    _list.insert(0, initialProduct);
     notifyListeners();
   }
 

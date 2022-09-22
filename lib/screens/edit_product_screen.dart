@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jumia/provider/products.dart';
+import 'package:jumia/provider/products_provider.dart';
+import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -13,10 +15,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _prideFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
-  
+
   final _formkey = GlobalKey<FormState>();
   var _product =
       Product(id: "", description: "", imageUrl: "", price: 0, title: "");
+
+  String id = "";
+
+  @override
+  void didChangeDependencies() {
+    id = ModalRoute.of(context)!.settings.arguments as String;
+    super.didChangeDependencies();
+  }
 
   @override
   void dispose() {
@@ -41,8 +51,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void saveForm() {
+    final val = _formkey.currentState!.validate();
+    if (!val) {
+      return;
+    }
     _formkey.currentState!.save();
- 
+    Provider.of<ProductsProvider>(context, listen: false).addProducts(_product);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -56,6 +71,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
             child: ListView(
               children: [
                 TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'add a title for your product';
+                    }
+                    return null;
+                  },
                   onSaved: ((newValue) => _product = Product(
                       id: _product.id,
                       description: _product.description,
@@ -68,6 +89,20 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   decoration: const InputDecoration(label: Text('title')),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'add a price for your product';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Please enter a valid number';
+                    }
+
+                    if (double.parse(value) <= 0) {
+                      return 'Please enter a value greater than 0';
+                    }
+
+                    return null;
+                  },
                   onSaved: ((newValue) => _product = Product(
                       id: _product.id,
                       description: _product.description,
@@ -82,6 +117,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   decoration: const InputDecoration(label: Text('price')),
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'add a descroption for your product';
+                    }
+                    return null;
+                  },
                   onSaved: ((newValue) => _product = Product(
                       id: _product.id,
                       description: newValue.toString(),
@@ -116,6 +157,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'add an image url for your product';
+                          }
+                          return null;
+                        },
                         onSaved: ((newValue) => _product = Product(
                             id: _product.id,
                             description: _product.description,
